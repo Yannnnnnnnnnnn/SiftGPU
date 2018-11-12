@@ -7,6 +7,24 @@ http://cs.unc.edu/~ccwu
 University of North Carolina at Chapel Hill
 
 
+How to compile
+---
+
+1. install opengl
+```
+sudo apt-get install libgl1-mesa-dev freeglut3-dev libglew-dev
+```
+2. install devil Image
+```
+sudo apt-get install libdevil-dev
+```
+3. compile
+```
+mkdir build
+cd build
+cmake ..
+make
+```
 
 
 1. SIFT 
