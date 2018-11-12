@@ -41,7 +41,6 @@ using namespace std;
 #include "ShaderMan.h"
 
 
-//#define SIFTGPU_NO_DEVIL
 
 #ifndef SIFTGPU_NO_DEVIL
     #include "IL/il.h"

@@ -21,10 +21,12 @@
 //
 ////////////////////////////////////////////////////////////////////////////
 
-
+#include <stdio.h>
 #include <stdlib.h>
 #include <vector>
 #include <iostream>
+#include "dlfcn.h"
+
 using std::vector;
 using std::iostream;
 
@@ -85,10 +87,15 @@ int main()
             HMODULE  hsiftgpu = LoadLibrary("siftgpu.dll");
         #endif
     #else
-        void * hsiftgpu = dlopen("libsiftgpu.so", RTLD_LAZY);
+
+        void * hsiftgpu = dlopen("./libsiftgpu.so", RTLD_NOW);
     #endif
 
-    if(hsiftgpu == NULL) return 0;
+    if(hsiftgpu == NULL) 
+    {
+        printf("%s",dlerror());
+        return 0;
+    }
 
     #ifdef REMOTE_SIFTGPU
         ComboSiftGPU* (*pCreateRemoteSiftGPU) (int, char*) = NULL;
@@ -176,13 +183,19 @@ int main()
     //The same context can be used by SiftMatchGPU
     if(sift->CreateContextGL() != SiftGPU::SIFTGPU_FULL_SUPPORTED) return 0;
 
+        std::cout<<"first"<<std::endl;
+
+
     if(sift->RunSIFT("../data/800-1.jpg"))
     {
+        std::cout<<"first"<<std::endl;
         //Call SaveSIFT to save result to file, the format is the same as Lowe's
         //sift->SaveSIFT("../data/800-1.sift"); //Note that saving ASCII format is slow
 
         //get feature count
         num1 = sift->GetFeatureNum();
+
+        std::cout<<num1<<std::endl;
 
         //allocate memory
         keys1.resize(num1);    descriptors1.resize(128*num1);
